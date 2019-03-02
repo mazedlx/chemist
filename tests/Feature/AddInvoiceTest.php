@@ -28,7 +28,8 @@ class AddInvoiceTest extends TestCase
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)->post('/invoices', $this->validParams());
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
+        $response->assertRedirect('/invoices');
         $this->assertEquals(1, Invoice::count());
         tap(Invoice::first(), function ($invoice) {
             $this->assertEquals(1234, $invoice->amount);

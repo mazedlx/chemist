@@ -39,7 +39,8 @@ class EditInvoiceTest extends TestCase
 
         $response = $this->actingAs($user)->patch("/invoices/$invoice->id", $this->validParams());
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
+        $response->assertRedirect('/invoices');
         tap(Invoice::first(), function ($invoice) {
             $this->assertEquals(4231, $invoice->amount);
             $this->assertEquals(2, $invoice->category_id);
